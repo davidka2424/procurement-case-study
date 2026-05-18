@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: invoice-app-back
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:casestudy}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      # `update` is fine for the case study (the PR backend's init-db job
+      # creates the shared `users` table; we just append our own `invoices`
+      # and `invoice_sessions` tables on first boot). For production you'd
+      # want explicit migrations (Flyway/Liquibase) — flag this in your
+      # review.
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+    open-in-view: false
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+
+server:
+  port: 8002
+  error:
+    include-message: always
+
+logging:
+  level:
+    org.hibernate.SQL: warn
+
+# SpringDoc OpenAPI / Swagger UI paths. Defaults are already these, but
+# pinning them here makes the URL discoverable without leaving this file.
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
