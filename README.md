@@ -50,15 +50,99 @@ The process above is fragile in specific, well-known ways.
 
 ---
 
-## The case study
+## Your task
 
-There are three deliverables we expect from you.
+Integrate the Purchase Request and Invoice systems so that users no longer
+need to transfer information between them by hand and can see the relationship
+between a purchase request and its invoices.
 
-1. **Design and (ideally) prototype the integration** between the PR system, the invoice system, and the incoming ERP. We do not expect production code — diagrams, a written design doc, and either a working spike or a focused PR that shows the direction are all fair game. Be opinionated about boundaries, contracts, ownership, and how state flows.
-2. **List the improvements** you would make to each of the two existing systems on its own, given what the code looks like today. The codebase is intentionally rough — see _What's intentionally rough_ below for a starter list, but please don't stop there.
-3. **List the potential features** each system should grow into, in the broader scope (supplier domain, user/role management, budgets, ERP, PO matching, notifications, audit, reporting). Tell us what you'd build, in what order, and why.
+The business outcome is intentionally more specific than the implementation.
+You decide how records are associated, where the relationship lives, how the
+systems communicate, and which application owns each piece of data. We want to
+see those decisions and the reasoning behind them.
 
-There is no fixed time limit. We expect senior candidates to spend somewhere between half a day and a long weekend on this, depending on how far they push the prototype. Quality of judgement matters more than line count.
+You may change either existing application, change both, add an integration
+service, or combine those approaches. You may also replace an existing
+technology when the benefit justifies the cost.
+
+### Core deliverables
+
+#### 1. Design note
+
+Complete [`docs/DESIGN.md`](docs/DESIGN.md). We read this first.
+
+Describe your interpretation of the problem, domain model, system boundaries,
+integration contracts, data ownership, state flow, assumptions, failure and
+ambiguous cases, testing strategy, and explicit trade-offs. State what you
+intentionally left out and what you would do next.
+
+The template is a guide, not a required document structure. Change it when a
+different structure communicates your design better.
+
+#### 2. Working prototype
+
+Build a focused prototype of the core integration:
+
+- information no longer has to be manually copied between the Purchase Request
+  and Invoice systems;
+- a user can observe the relationship between a purchase request and its
+  invoices;
+- the scenario can be demonstrated through the running applications, their
+  APIs, or another clearly documented interface.
+
+Include automated tests appropriate to the risks in your design. We deliberately
+do not prescribe an API shape, persistence model, matching fields, exact test
+cases, or coverage target.
+
+#### 3. Roadmap
+
+In `docs/DESIGN.md`, provide a prioritized roadmap for turning the prototype
+into a production system. Separate near-term hardening from broader product
+capabilities. Tell us what you would build, in what order, and why.
+
+### Optional extensions
+
+The following are opportunities to demonstrate additional depth, not hidden
+requirements:
+
+- integration with the incoming ERP and Purchase Orders;
+- richer or automated PR-to-invoice matching;
+- payment status and amount-delta visibility;
+- supplier master data;
+- notifications and audit trail;
+- users, roles, teams, and budgets;
+- reporting and reconciliation;
+- resilience, observability, and performance at scale;
+- richer UI or workflow visualization.
+
+Choose only the extensions that strengthen your design.
+
+### Scope and time
+
+There is no hard time limit. We expect a senior candidate to spend somewhere
+between half a day and a long weekend, depending on how far they push the
+prototype. Quality of judgement matters more than breadth or line count.
+
+A working prototype is the expected submission. If you deliberately limit the
+time spent and cannot implement it, a strong design proposal is an acceptable
+minimum. Be explicit about the constraint, what remains unimplemented, and the
+next implementation steps.
+
+### What we evaluate
+
+We are interested in:
+
+- how you understand and frame the business problem;
+- how you decompose and prioritize the work;
+- where you draw domain and system boundaries;
+- how you reason about contracts, data ownership, state, ambiguity, and
+  failures;
+- which assumptions and trade-offs you make explicit;
+- how focused, reliable, and reviewable the prototype is;
+- how you test and demonstrate the result;
+- how realistic and well-prioritized your roadmap is.
+
+There is no single expected architecture.
 
 ---
 
@@ -139,22 +223,45 @@ These are the rocks under the surface. Some of them are on purpose, some of them
 
 ## Handing it back
 
-The case study is delivered as a GitHub repo. To submit your work:
+Keep your solution and its review history in your own fork. Do not open
+candidate-solution pull requests against this source repository.
 
 1. **Fork** this repository to your own GitHub account.
-2. Work in **feature branches** off `main`. One branch per discrete piece of work tends to read best — for example:
-   - `feat/integration-spike` — your integration prototype
-   - `docs/architecture` — the design doc, diagrams, decision notes
-   - `chore/improvements-pr-app` — concrete improvements to one of the existing apps
-   - `chore/improvements-invoice-app` — the same for the other
-3. **Open pull requests** from your fork back to this repository's `main`. Smaller, focused PRs are easier to review than one giant one. It's fine if some PRs are draft / proof-of-concept — say so in the description.
-4. In each PR description, tell us:
-   - What problem this PR addresses (link the section of this README or your design doc).
-   - What's in scope vs. what you intentionally left out, and why.
-   - What you would do next if you had another week.
-5. **Written design** — diagrams, architecture decisions, ERP onboarding plan, supplier domain model, anything else you want us to read — lives in `docs/` (or a top-level `DESIGN.md`). Markdown is fine; if you'd rather link out to a Figma or a Miro board, do that and include the link in the PR description. Make sure the link is publicly viewable or invite `s.nagorny@all3.com` if it's gated.
-6. When you're done, drop a note to `s.nagorny@all3.com` with links to your fork and the PRs you'd like us to review.
+2. Work in feature branches off your fork's `main`.
+3. Open pull requests **between branches in your fork**, with your fork's
+   `main` as the base branch.
+4. Make the completed `docs/DESIGN.md` your first pull request.
+5. Submit the implementation as one or more focused pull requests. You decide
+   how many PRs make the work easiest to understand and review.
+6. In each PR description, explain:
+   - the problem and scope of the PR;
+   - the important decisions and trade-offs;
+   - what you intentionally left out;
+   - how you verified the change;
+   - what you would do next.
+7. When you are done, email `s.nagorny@all3.com` with:
+   - a link to your fork;
+   - an ordered list of the pull requests you want us to review;
+   - instructions for running and reviewing the result;
+   - any external design links. Make them publicly viewable or grant access to
+     `s.nagorny@all3.com`.
 
-We are looking less for "did you finish it all" and more for **how you decompose the problem, where you draw the boundaries, and what trade-offs you make explicit**. A small, sharp PR with a great design doc beats a sprawling rewrite every time.
+For example:
+
+```text
+Fork: https://github.com/<candidate>/procurement-case-study
+
+1. Write the design proposal
+   https://github.com/<candidate>/procurement-case-study/pull/1
+
+2. Implement the core integration
+   https://github.com/<candidate>/procurement-case-study/pull/2
+
+3. Add an optional extension
+   https://github.com/<candidate>/procurement-case-study/pull/3
+```
+
+The pull requests may be merged or left open in your fork, provided their diffs
+and discussion remain available for review.
 
 Good luck.
