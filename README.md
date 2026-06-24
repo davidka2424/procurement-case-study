@@ -268,9 +268,10 @@ Good luck.
 
 ## My solution
 
-See docs/solution/ for the full write-up: architecture
-and key decisions (README.md), diagrams
-(DIAGRAM.md), endpoints/schemas/DDL
-(API.md), improvements to each existing system
-(IMPROVEMENTS.md), and the feature
-roadmap (ROADMAP.md).
+See [`docs/solution/`](./docs/solution/) for the full write-up:
+
+- Architecture and key decisions — [`README.md`](./docs/solution/README.md)
+- Diagrams — [`DIAGRAM.md`](./docs/solution/DIAGRAM.md)
+- Endpoints / schemas / DDL — [`API.md`](./docs/solution/API.md)
+- Improvements to each existing system — [`IMPROVEMENTS.md`](./docs/solution/IMPROVEMENTS.md)
+- Feature roadmap — [`ROADMAP.md`](./docs/solution/ROADMAP.md)
