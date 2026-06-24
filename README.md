@@ -265,3 +265,12 @@ The pull requests may be merged or left open in your fork, provided their diffs
 and discussion remain available for review.
 
 Good luck.
+
+## My solution
+
+See docs/solution/ for the full write-up: architecture
+and key decisions (README.md), diagrams
+(DIAGRAM.md), endpoints/schemas/DDL
+(API.md), improvements to each existing system
+(IMPROVEMENTS.md), and the feature
+roadmap (ROADMAP.md).
